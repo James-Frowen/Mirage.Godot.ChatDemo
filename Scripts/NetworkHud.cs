@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class NetworkHud : Node
 {
@@ -13,6 +14,15 @@ public partial class NetworkHud : Node
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        try
+        {
+            Mirage.GeneratedCode.Init();
+        }
+        catch (Exception e)
+        {
+            GD.PrintErr(e.ToString());
+        }
+
         serverButton = new Button();
         serverButton.Text = "Start Server";
         serverButton.Pressed += StartServerPressed;

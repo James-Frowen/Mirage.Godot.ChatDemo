@@ -55,17 +55,25 @@ public partial class NetworkChat : Node
 
     private void StartServer()
     {
+        GD.Print("Chat.StartServer");
         AddChild(new ServerChat(networkRunner.Server));
     }
 
     private void StartClient()
     {
+        GD.Print("Chat.StartClient");
         AddChild(new ClientChat(networkRunner.Client, history));
     }
 
     public override void _Process(double delta)
     {
         sendMessage.Disabled = string.IsNullOrEmpty(playerName);
+
+        if (networkRunner.Server.Active)
+        {
+            name.Editable = false;
+            name.Text = $"Player Count => {networkRunner.Server.Players.Count}";
+        }
     }
 }
 

@@ -22,8 +22,9 @@ public partial class ClientChat : Node
             lines[i - 1] = lines[i];
         }
         // set new Message
-        lines[0] = message.Message;
+        lines[^1] = $"{message.User}: {message.Message}";
 
         history.Text = string.Join("\n", lines);
+        history.ScrollVertical = 500;
     }
 }

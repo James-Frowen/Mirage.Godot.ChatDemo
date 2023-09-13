@@ -3,6 +3,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="D:\Projects\csharp\Mirage.Core\src\Mirage.CodeGen\bin\Release\net6.0\Mirage.CodeGen.exe $(TargetPath)" />
+    <Error Condition="$(ExitCode) == 1" />
+  </Target>
+  
   <ItemGroup>
     <Reference Include="Mirage.Core">
       <HintPath>Plugins\Mirage.Core.dll</HintPath>
@@ -14,4 +20,5 @@
       <HintPath>Plugins\Mirage.SocketLayer.dll</HintPath>
     </Reference>
   </ItemGroup>
+  
 </Project>

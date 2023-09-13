@@ -1,5 +1,7 @@
 using Godot;
 using Mirage;
+using Mirage.Logging;
+using Mirage.SocketLayer;
 using Mirage.Sockets.Udp;
 using System;
 
@@ -12,6 +14,10 @@ public partial class NetworkRunner : Node
 
     public NetworkRunner()
     {
+        LogFactory.ReplaceLogHandler(new GodotLogger(), true);
+        LogFactory.SetDefaultLogLevel(LogType.Log);
+        LogFactory.GetLogger<Peer>().filterLogType = LogType.Warning;
+
         Server = new MirageServer();
         Client = new MirageClient();
     }
@@ -22,15 +28,13 @@ public partial class NetworkRunner : Node
             throw new InvalidOperationException("Already running");
 
         GD.Print("StartUDPServer");
-        var server = new MirageServer();
-
         var socketFactory = new UdpSocketFactory();
         var socket = socketFactory.CreateSocket();
         var endpoint = socketFactory.GetBindEndPoint(port);
-        server.StartServer(socket, socketFactory.MaxPacketSize, endpoint);
+        Server.StartServer(socket, socketFactory.MaxPacketSize, endpoint);
 
-        _activePeer = server;
-        return server;
+        _activePeer = Server;
+        return Server;
     }
     public MirageClient StartUDPClient(string address, int port)
     {
@@ -38,15 +42,14 @@ public partial class NetworkRunner : Node
             throw new InvalidOperationException("Already running");
 
         GD.Print("StartUDPClient");
-        var client = new MirageClient();
 
         var socketFactory = new UdpSocketFactory();
         var socket = socketFactory.CreateSocket();
         var endpoint = socketFactory.GetConnectEndPoint(address, checked((ushort)port));
-        client.Connect(socket, socketFactory.MaxPacketSize, endpoint);
+        Client.Connect(socket, socketFactory.MaxPacketSize, endpoint);
 
-        _activePeer = client;
-        return client;
+        _activePeer = Client;
+        return Client;
     }
 
     public void Stop()
