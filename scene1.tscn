@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://bqshm2fdqmrah"]
+
+[ext_resource type="Script" path="res://Scripts/NetworkHud.cs" id="1_w70sv"]
+[ext_resource type="Script" path="res://Scripts/NetworkChat.cs" id="2_g3405"]
+[ext_resource type="Script" path="res://Scripts/NetworkRunner.cs" id="2_vt0ob"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="NetworkHud" type="Node" parent="." node_paths=PackedStringArray("networkRunner")]
+script = ExtResource("1_w70sv")
+networkRunner = NodePath("../NetworkRunner")
+Port = 7778
+
+[node name="NetworkRunner" type="Node" parent="."]
+script = ExtResource("2_vt0ob")
+
+[node name="Chat" type="Node" parent="." node_paths=PackedStringArray("networkRunner", "name", "setName", "input", "sendMessage", "history")]
+script = ExtResource("2_g3405")
+networkRunner = NodePath("../NetworkRunner")
+name = NodePath("name")
+setName = NodePath("setName")
+input = NodePath("Input")
+sendMessage = NodePath("sendMessage")
+history = NodePath("histroy")
+
+[node name="Input" type="TextEdit" parent="Chat"]
+offset_left = 16.0
+offset_top = 535.0
+offset_right = 1026.0
+offset_bottom = 624.0
+placeholder_text = "message"
+
+[node name="histroy" type="TextEdit" parent="Chat"]
+offset_left = 14.0
+offset_top = 235.0
+offset_right = 1024.0
+offset_bottom = 530.0
+editable = false
+
+[node name="name" type="TextEdit" parent="Chat"]
+offset_left = 652.0
+offset_top = 19.0
+offset_right = 914.0
+offset_bottom = 62.0
+placeholder_text = "set name"
+
+[node name="setName" type="Button" parent="Chat"]
+offset_left = 936.0
+offset_top = 21.0
+offset_right = 1116.0
+offset_bottom = 58.0
+text = "Set Name"
+
+[node name="sendMessage" type="Button" parent="Chat"]
+offset_left = 1034.0
+offset_top = 540.0
+offset_right = 1137.0
+offset_bottom = 617.0
+text = "Send"
