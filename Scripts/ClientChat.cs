@@ -16,15 +16,20 @@ public partial class ClientChat : Node
 
     private void ClientChatMessage(INetworkPlayer player, ChatMessage message)
     {
+        var newMessage = $"{message.User}: {message.Message}";
+        ShiftLines(lines, newMessage);
+        history.Text = string.Join("\n", lines);
+        history.ScrollVertical = 500;
+    }
+
+    public static void ShiftLines<T>(T[] lines, T newItem)
+    {
         // shift old Message
         for (var i = 1; i < lines.Length; i++)
         {
             lines[i - 1] = lines[i];
         }
         // set new Message
-        lines[^1] = $"{message.User}: {message.Message}";
-
-        history.Text = string.Join("\n", lines);
-        history.ScrollVertical = 500;
+        lines[^1] = newItem;
     }
 }
