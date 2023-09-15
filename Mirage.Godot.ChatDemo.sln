@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MirageGodot", "MirageGodot.csproj", "{4B88D903-10E6-45AC-AC89-8D35A06F8B96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mirage.Godot.ChatDemo", "Mirage.Godot.ChatDemo.csproj", "{4B88D903-10E6-45AC-AC89-8D35A06F8B96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
